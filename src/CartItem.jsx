@@ -4,6 +4,7 @@ import { removeItem, updateQuantity } from './CartSlice';
 import './CartItem.css';
 
 const CartItem = ({ onContinueShopping }) => {
+  console.log("Cart items in CartItem.jsx:", cartItems); //AGS
   const cart = useSelector(state => state.cart.items);
   const dispatch = useDispatch();
 
