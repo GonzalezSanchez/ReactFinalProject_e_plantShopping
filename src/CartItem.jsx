@@ -13,7 +13,7 @@ const CartItem = ({ onContinueShopping }) => {
         let total = 0;
 
         cart.forEach(item => {
-            const quantity = item.quantity || 0; // Fallback to 1 if quantity is missing
+            const quantity = item.quantity || 0; // Fallback to 0 if quantity is missing
             const costNumber = parseFloat(item.cost.substring(1)); // Remove "$" and convert to number
             total += costNumber * quantity;
         });
@@ -27,20 +27,29 @@ const CartItem = ({ onContinueShopping }) => {
 
     const handleCheckoutShopping = (e) => {
         alert('Functionality to be added for future reference');
-      };
+    };
 
     const handleIncrement = (item) => {
+        dispatch(updateQuantity({ name: item.name, quantity: item.quantity + 1 }));
     };
 
     const handleDecrement = (item) => {
-
+        if (item.quantity > 1) {
+            dispatch(updateQuantity({ name: item.name, quantity: item.quantity - 1 }));
+        } else {
+            dispatch(removeItem(item.id));
+        }
     };
 
     const handleRemove = (item) => {
+        dispatch(removeItem(item.id));
     };
 
     // Calculate total cost based on quantity for an item
     const calculateTotalCost = (item) => {
+        const quantity = item.quantity || 0;
+        const costNumber = parseFloat(item.cost.substring(1)); // Remove "$"
+        return (costNumber * quantity).toFixed(2);
     };
 
     return (
